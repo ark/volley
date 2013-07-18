@@ -1,4 +1,17 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.5.+'
+    }
+}
+
 apply plugin: 'android-library'
+apply plugin: 'maven-publish'
+
+group 'com.android.frameworks'
+version 'master-SNAPSHOT'
 
 android {
     compileSdkVersion 17
@@ -25,6 +38,23 @@ android {
             res.srcDirs       = ["tests/res"]
             resources.srcDirs = ["tests/src"]
             java.srcDirs      = ["tests/src"]
+        }
+    }
+}
+
+task jar(type: Jar) {
+    from android.sourceSets.main.java
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+           artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file://$buildDir/../../ark/snapshots"
         }
     }
 }
