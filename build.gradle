@@ -42,14 +42,11 @@ android {
     }
 }
 
-task jar(type: Jar) {
-    from android.sourceSets.main.java
-}
-
+android.libraryVariants
 publishing {
     publications {
         maven(MavenPublication) {
-           artifact jar
+           artifact bundleRelease
         }
     }
     repositories {
